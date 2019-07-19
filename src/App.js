@@ -4,8 +4,15 @@ import TwitterMessage from "./components/TwitterMessage";
 
 class App extends Component {
 
+  state = {
+    currentUser: {}
+  }
+
   login = ({ username, password }) => {
     console.log(`Logging in ${username} with password ${password}`);
+    this.setState({
+      currentUser: {name: username}
+    })
   };
 
   render() {
@@ -17,13 +24,18 @@ class App extends Component {
         </h1>
         <LoginForm handleLogin={this.login} />
 
-        <h1>
-          <pre>TwitterMessage</pre>
-        </h1>
-        <TwitterMessage maxChars={140} />
-
-
-
+        {
+          this.state.currentUser.name ? (
+          <div>
+            <h1>
+              <pre>TwitterMessage</pre>
+            </h1>
+            <TwitterMessage maxChars={140} />
+          </div>
+          ) : (
+            <h4>please login!</h4>
+          )
+        }
       </div>
     )
   }
